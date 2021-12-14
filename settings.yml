@@ -1,0 +1,5 @@
+sidebar_categories:
+  type: list
+  list_type: category
+  default: ""
+  description: "Choose which categories to show in a user's sidebar"
