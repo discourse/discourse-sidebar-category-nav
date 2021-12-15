@@ -33,10 +33,10 @@
     margin: 0;
     list-style: none;
     &-item {
-      margin-bottom: 0.5em;
+      border-bottom: 1px solid var(--secondary);
       &-link {
-        background: rgba(var(--primary-rgb), 0.15);
-        padding: 0.5em 0.75em;
+        background: var(--primary-low);
+        padding: 0.75em;
         display: flex;
         align-items: center;
         color: var(--primary-high);
