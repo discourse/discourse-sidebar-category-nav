@@ -1,16 +1,41 @@
-<div class="category-sidebar">
-  <ul class="category-sidebar-list">
-      <li class="category-sidebar-list-item">
-        {{#link-to "discovery.latest" class="category-sidebar-list-item-link"}}
-          All Topics
-        {{/link-to}}
-      </li>
-    {{#each sidebarCategories as |sidebarCategory|}}
-      <li class="category-sidebar-list-item">
-        {{#link-to "discovery.category" sidebarCategory.slug class="category-sidebar-list-item-link"}}
-          <span class="sidbar-category-badge" style="background-color: #{{sidebarCategory.color}};"></span>{{sidebarCategory.slug}}
-        {{/link-to}}
-      </li>
-    {{/each}}
-  </ul>
-</div>
+{{#if categoriesLoaded}}
+  <div class="category-sidebar">
+    <ul class="category-sidebar-list">
+        <li class="category-sidebar-list-item">
+          {{#link-to "discovery.latest" class="category-sidebar-list-item-link"}}
+            All Topics
+          {{/link-to}}
+        </li>
+      {{#each sidebarCategories as |sidebarCategory|}}
+        <li class="category-sidebar-list-item">
+          {{#link-to "discovery.category" sidebarCategory.slug class="category-sidebar-list-item-link"}}
+            <span class="sidebar-category-badge" style="background-color: #{{sidebarCategory.color}};"></span>{{sidebarCategory.name}}
+          {{/link-to}}
+          {{!-- 
+          Logic to check that the category either:
+          1) Has children, and the user is on that category page, so should render the children as well, OR
+          2) Has a child category that the user is currently viewing 
+          --}}
+          {{#if 
+            (or 
+              (and
+                (eq currentRouteCategory sidebarCategory.name)
+                sidebarCategory.has_children
+              )
+              (childIsActive currentRoute sidebarCategory.slug)
+            )}}
+            <ul class="category-sidebar-list">
+              {{#each sidebarCategory.subcategories as |subSidebarCategory|}}
+                <li class="category-sidebar-list-item">
+                  {{#link-to "discovery.category" (concat sidebarCategory.slug "/" subSidebarCategory.slug) class="category-sidebar-list-item-link subcategory-item"}}
+                    <span class="sidebar-category-badge" style="border: 1px solid #{{subSidebarCategory.color}};"></span>{{subSidebarCategory.name}}
+                  {{/link-to}}
+                </li>
+              {{/each}}
+            </ul>
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}

@@ -31,15 +31,24 @@
     margin: 0;
     list-style: none;
     &-item {
-      border-bottom: 1px solid var(--secondary);
       &-link {
         background: var(--primary-low);
         padding: 0.75em;
+        &.subcategory-item {
+          padding-left: 1.5em;
+          .sidebar-category-badge {
+            width: calc(0.5em - 2px);
+            height: calc(0.5em - 2px);
+            border-radius: 2px;
+            margin-right: 0.50em;
+          }
+        }
         display: flex;
         align-items: center;
         color: var(--primary-high);
         text-transform: capitalize;
-        .sidbar-category-badge {
+        border-bottom: 1px solid var(--secondary);
+        .sidebar-category-badge {
           width: 0.5em;
           height: 0.5em;
           border-radius: 2px;

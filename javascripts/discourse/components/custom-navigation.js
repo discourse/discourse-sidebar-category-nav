@@ -1,11 +1,18 @@
 import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
+import { inject as service } from "@ember/service";
+import Category from "discourse/models/category";
 
 export default Component.extend({
+  router: service(),
   tagName: "",
 
   init() {
     this._super(...arguments);
+  },
+
+  categoriesLoaded() {
+    return Category.list().length !== 0;
   },
 
   @discourseComputed("site.categoriesList")
@@ -17,7 +24,42 @@ export default Component.extend({
       .split("|")
       .map(id => parseInt(id));
     return categoriesList.filter(category => {
-      return filteredIds.includes(category.id);
+      return !category.parentCategory;
     });
+  },
+
+  @discourseComputed("router.currentRoute")
+  currentRouteCategory(currentRoute) {
+    if (!currentRoute.attributes) {
+      return false;
+    }
+    if (
+      !currentRoute.name === "discovery.category" ||
+      !currentRoute.attributes.category
+    ) {
+      return false;
+    }
+    return currentRoute.attributes.category.name;
+  },
+
+  @discourseComputed("router.currentRoute")
+  currentRoute(currentRoute) {
+    if (!currentRoute.attributes) {
+      return false;
+    }
+    if (
+      !currentRoute.name === "discovery.category" ||
+      !currentRoute.attributes.category
+    ) {
+      return false;
+    }
+    if (
+      !currentRoute.name === "discovery.category" ||
+      !currentRoute.attributes.category.parentCategory
+    ) {
+      return false;
+    }
+
+    return currentRoute;
   }
 });
