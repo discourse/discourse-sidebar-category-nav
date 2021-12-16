@@ -1,4 +1,4 @@
-{{#if categoriesLoaded}}
+{{#if shouldShow}}
   <div class="category-sidebar">
     <ul class="category-sidebar-list">
         <li class="category-sidebar-list-item">
@@ -8,7 +8,7 @@
         </li>
       {{#each sidebarCategories as |sidebarCategory|}}
         <li class="category-sidebar-list-item">
-          {{#link-to "discovery.category" sidebarCategory.slug class="category-sidebar-list-item-link"}}
+          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class="category-sidebar-list-item-link"}}
             <span class="sidebar-category-badge" style="background-color: #{{sidebarCategory.color}};"></span>{{sidebarCategory.name}}
           {{/link-to}}
           {{!-- 
@@ -27,7 +27,7 @@
             <ul class="category-sidebar-list">
               {{#each sidebarCategory.subcategories as |subSidebarCategory|}}
                 <li class="category-sidebar-list-item">
-                  {{#link-to "discovery.category" (concat sidebarCategory.slug "/" subSidebarCategory.slug) class="category-sidebar-list-item-link subcategory-item"}}
+                  {{#link-to "discovery.category" (concat sidebarCategory.slug "/" subSidebarCategory.slug "/" subSidebarCategory.id) class="category-sidebar-list-item-link subcategory-item"}}
                     <span class="sidebar-category-badge" style="border: 1px solid #{{subSidebarCategory.color}};"></span>{{subSidebarCategory.name}}
                   {{/link-to}}
                 </li>
