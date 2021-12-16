@@ -9,7 +9,8 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    if (this.siteSettings.login_required || !this.currentUser) return false;
+    if (this.siteSettings.login_required) return false;
+    if (!this.currentUser) return false;
   },
 
   categoriesLoaded() {
