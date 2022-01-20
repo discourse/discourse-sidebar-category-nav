@@ -7,13 +7,9 @@ export default Component.extend({
   router: service(),
   tagName: "",
 
-  init() {
-    this._super(...arguments);
-    if (this.siteSettings.login_required) return false;
-    if (!this.currentUser) return false;
-  },
-
+  @discourseComputed()
   categoriesLoaded() {
+    if (this.siteSettings.login_required && !this.currentUser) return false;
     return Category.list().length !== 0;
   },
 
