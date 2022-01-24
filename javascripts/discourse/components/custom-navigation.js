@@ -63,7 +63,7 @@ export default Component.extend({
 
   @discourseComputed("router.currentRoute")
   currentRoute(currentRoute) {
-    if (!currentRoute.attributes) {
+    if (!currentRoute?.attributes) {
       return false;
     }
     if (
