@@ -2,15 +2,36 @@ import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
 import Category from "discourse/models/category";
+import { action } from "@ember/object";
+import { schedule } from "@ember/runloop";
 
 export default Component.extend({
   router: service(),
   tagName: "",
 
+  @discourseComputed("categoriesLoaded", "allowedPage")
+  shouldShow(categoriesLoaded, allowedPage) {
+    if (categoriesLoaded && allowedPage) {
+      document.body.classList.add("sidebar-navigation-shown");
+      return true;
+    } else {
+      document.body.classList.remove("sidebar-navigation-shown");
+      return false;
+    }
+  },
+
   @discourseComputed()
   categoriesLoaded() {
     if (this.siteSettings.login_required && !this.currentUser) return false;
     return Category.list().length !== 0;
+  },
+
+  @discourseComputed("router.currentRoute")
+  allowedPage(currentRoute) {
+    return (
+      !currentRoute?.name.includes("user") &&
+      !currentRoute?.name.includes("admin")
+    );
   },
 
   @discourseComputed("site.categoriesList")
@@ -28,7 +49,7 @@ export default Component.extend({
 
   @discourseComputed("router.currentRoute")
   currentRouteCategory(currentRoute) {
-    if (!currentRoute.attributes) {
+    if (!currentRoute?.attributes) {
       return false;
     }
     if (
