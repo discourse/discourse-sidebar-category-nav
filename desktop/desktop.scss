@@ -2,9 +2,17 @@
   #main-outlet {
     display: grid;
     grid-template-columns: 20% 80%;
+    @media screen and (max-width: 960px) {
+      grid-template-columns: 25% 75%;
+    }
+    @media screen and (max-width: 720px) {
+      grid-template-columns: 1fr;
+      .category-sidebar-outlet {
+        display: none;
+      }
+    }
     grid-template-areas: "sidebar navigation" "sidebar content";
     grid-template-rows: 65px 1fr;
-    grid-column-gap: 1em;
     .category-sidebar-outlet {
       grid-area: sidebar;
     }
