@@ -23,6 +23,9 @@
   #main-container + div {
     grid-area: 1;
   }
+  &.category:not(.forza-hero-home) #main-outlet {
+    grid-template-rows: 120px 1fr;
+  }
 }
 
 .category-sidebar-outlet {

@@ -8,7 +8,7 @@
         </li>
       {{#each sidebarCategories as |sidebarCategory|}}
         <li class="category-sidebar-list-item">
-          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class=(concat sidebarCategory.slug " category-sidebar-list-item-link") click=(action "scrollToCategory" )}}
+          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class=(concat sidebarCategory.slug " category-sidebar-list-item-link")}}
             <span class="sidebar-category-badge" style="background-color: #{{sidebarCategory.color}};"></span>{{sidebarCategory.name}}
           {{/link-to}}
           {{!-- 
