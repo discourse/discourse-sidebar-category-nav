@@ -1,32 +1,47 @@
-#main-outlet {
-  display: grid;
-  grid-template-columns: 20% 80%;
-  grid-template-areas: "sidebar navigation" "sidebar content";
-  grid-template-rows: 50px 1fr;
-  grid-column-gap: 1em;
-  .category-sidebar-outlet {
-    grid-area: sidebar;
-  }
+.sidebar-navigation-shown {
+  #main-outlet {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-areas: "sidebar navigation" "sidebar content";
+    grid-template-rows: 65px 1fr;
+    grid-column-gap: 1em;
+    .category-sidebar-outlet {
+      grid-area: sidebar;
+    }
 
-  .list-controls {
-    grid-area: navigation;
-  }
+    .list-controls {
+      grid-area: navigation;
+    }
 
-  .list-container {
-    grid-area: content;
+    .list-container {
+      grid-area: content;
+    }
+  }
+  #main-container + .container,
+  #main-container + .reviewable,
+  #main-container + .discourse-post-event-upcoming-events,
+  #main-container + div {
+    grid-area: 1;
   }
 }
 
-#main-container + .container,
-#main-container + .reviewable,
-#main-container + .discourse-post-event-upcoming-events,
-#main-container + div {
-  grid-area: 1;
+.category-sidebar-outlet {
+  max-height: calc(100vh - var(--header-offset) - 18.5em);
+  overflow-y: scroll;
+  scrollbar-color: var(--primary-low-mid) transparent;
+  position: sticky;
+  top: var(--header-offset);
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-low);
+    border-radius: 8px;
+    border: 4px solid var(--secondary);
+  }
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
 }
 
 .category-sidebar {
-  position: sticky;
-  top: var(--header-offset);
   &-list {
     margin: 0;
     list-style: none;
@@ -40,7 +55,7 @@
             width: calc(0.5em - 2px);
             height: calc(0.5em - 2px);
             border-radius: 2px;
-            margin-right: 0.50em;
+            margin-right: 0.5em;
           }
         }
         display: flex;
@@ -52,7 +67,7 @@
           width: 0.5em;
           height: 0.5em;
           border-radius: 2px;
-          margin-right: 0.50em;
+          margin-right: 0.5em;
         }
         &:visited {
           color: var(--primary-high);
@@ -60,7 +75,8 @@
             color: var(--primary);
           }
         }
-        &:hover, &.active {
+        &:hover,
+        &.active {
           background: rgba(var(--primary-rgb), 0.25);
           color: var(--primary);
         }
