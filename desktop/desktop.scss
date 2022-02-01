@@ -2,7 +2,8 @@
   #main-outlet {
     display: grid;
     grid-template-columns: 20% 80%;
-    grid-gap: 1em;
+    grid-column-gap: 1em;
+    grid-row-gap: 3px;
     @media screen and (max-width: 960px) {
       grid-template-columns: 25% 75%;
     }
@@ -32,7 +33,7 @@
   #main-container + div {
     grid-area: 1;
   }
-  &.category:not(.forza-hero-home) #main-outlet {
+  &.category:not(.forza-hero-home):not(.categories-list) #main-outlet {
     grid-template-rows: 120px 1fr;
   }
 }
