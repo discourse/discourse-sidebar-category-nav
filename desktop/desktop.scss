@@ -2,9 +2,19 @@
   #main-outlet {
     display: grid;
     grid-template-columns: 20% 80%;
+    grid-column-gap: 1em;
+    grid-row-gap: 3px;
+    @media screen and (max-width: 960px) {
+      grid-template-columns: 25% 75%;
+    }
+    @media screen and (max-width: 720px) {
+      grid-template-columns: 1fr;
+      .category-sidebar-outlet {
+        display: none;
+      }
+    }
     grid-template-areas: "sidebar navigation" "sidebar content";
     grid-template-rows: 65px 1fr;
-    grid-column-gap: 1em;
     .category-sidebar-outlet {
       grid-area: sidebar;
     }
@@ -23,7 +33,7 @@
   #main-container + div {
     grid-area: 1;
   }
-  &.category:not(.forza-hero-home) #main-outlet {
+  &.category:not(.forza-hero-home):not(.categories-list) #main-outlet {
     grid-template-rows: 120px 1fr;
   }
 }

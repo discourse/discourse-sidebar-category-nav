@@ -2,6 +2,8 @@ import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
 import Category from "discourse/models/category";
+import { action } from "@ember/object";
+import { schedule } from "@ember/runloop";
 
 export default Component.extend({
   router: service(),
