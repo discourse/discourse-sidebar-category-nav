@@ -16,7 +16,7 @@
           1) Has children, and the user is on that category page, so should render the children as well, OR
           2) Has a child category that the user is currently viewing 
           --}}
-          {{#if 
+          {{#if
             (or 
               (and
                 (eq currentRouteCategory sidebarCategory.name)
@@ -25,11 +25,29 @@
               (childIsActive currentRoute sidebarCategory.slug)
             )}}
             <ul class="category-sidebar-list">
-              {{#each sidebarCategory.subcategories as |subSidebarCategory|}}
+              {{#each sidebarCategory.subcategories as |childCategory|}}
                 <li class="category-sidebar-list-item">
-                  {{#link-to "discovery.category" (concat sidebarCategory.slug "/" subSidebarCategory.slug "/" subSidebarCategory.id) class="category-sidebar-list-item-link subcategory-item"}}
-                    <span class="sidebar-category-badge" style="border: 1px solid #{{subSidebarCategory.color}};"></span>{{subSidebarCategory.name}}
+                  {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" childCategory.id) class="category-sidebar-list-item-link subcategory-item"}}
+                    <span class="sidebar-category-badge" style="border: 1px solid #{{childCategory.color}};"></span>{{childCategory.name}}
                   {{/link-to}}
+                  {{#if
+                    (or 
+                      (and
+                        (eq currentRouteCategory childCategory.name)
+                        childCategory.has_children
+                      )
+                      (childIsActive currentRoute childCategory.slug)
+                    )}}
+                    <ul class="category-sidebar-list">
+                      {{#each childCategory.subcategories as |grandChildCategory|}}
+                        <li class="category-sidebar-list-item">
+                          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" grandChildCategory.slug "/" grandChildCategory.id) class="category-sidebar-list-item-link subcategory-item grandchild"}}
+                            <span class="sidebar-category-badge" style="border: 1px solid #{{grandChildCategory.color}};"></span>{{grandChildCategory.name}}
+                          {{/link-to}}
+                        </li>
+                      {{/each}}
+                    </ul>
+                  {{/if}}
                 </li>
               {{/each}}
             </ul>

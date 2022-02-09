@@ -65,13 +65,13 @@ export default Component.extend({
       return false;
     }
     if (
-      !currentRoute.name === "discovery.category" ||
+      currentRoute.name !== "discovery.category" ||
       !currentRoute.attributes.category
     ) {
       return false;
     }
     if (
-      !currentRoute.name === "discovery.category" ||
+      currentRoute.name !== "discovery.category" ||
       !currentRoute.attributes.category.parentCategory
     ) {
       return false;
