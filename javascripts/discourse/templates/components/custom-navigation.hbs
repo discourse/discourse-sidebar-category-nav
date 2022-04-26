@@ -1,48 +1,52 @@
 {{#if shouldShow}}
   <div class="category-sidebar">
     <ul class="category-sidebar-list">
-        <li class="category-sidebar-list-item">
+        <li class="category-sidebar-list-item all-topics">
           {{#link-to "discovery.latest" class="category-sidebar-list-item-link"}}
             All Topics
           {{/link-to}}
         </li>
       {{#each sidebarCategories as |sidebarCategory|}}
-        <li class="category-sidebar-list-item">
-          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class=(concat sidebarCategory.slug " category-sidebar-list-item-link")}}
-            <span class="sidebar-category-badge" style="background-color: #{{sidebarCategory.color}};"></span>{{sidebarCategory.name}}
-          {{/link-to}}
-          {{!-- 
-          Logic to check that the category either:
-          1) Has children, and the user is on that category page, so should render the children as well, OR
-          2) Has a child category that the user is currently viewing 
-          --}}
-          {{#if
+        <li 
+          class={{concat 'category-sidebar-list-item ' 
+          (if
             (or 
               (and
                 (eq currentRouteCategory sidebarCategory.name)
                 sidebarCategory.has_children
               )
               (childIsActive currentRoute sidebarCategory.slug)
+            ) 'show-children'
+          )}} 
+          style="--category-color: #{{sidebarCategory.color}}"
+        >
+          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class=(concat sidebarCategory.slug " category-sidebar-list-item-link")}}
+            <span class="sidebar-category-badge"></span>{{sidebarCategory.name}}
+          {{/link-to}}
+          {{!-- 
+          2) Has a child category / the user is currently viewing 
+          --}}
+          {{#if
+            (or 
+              sidebarCategory.has_children
+              (childIsActive currentRoute sidebarCategory.slug)
             )}}
-            <ul class="category-sidebar-list">
+            <ul class="category-sidebar-list subcategories">
               {{#each sidebarCategory.subcategories as |childCategory|}}
-                <li class="category-sidebar-list-item">
+                <li class="category-sidebar-list-item child" style="--category-color: #{{childCategory.color}}">
                   {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" childCategory.id) class="category-sidebar-list-item-link subcategory-item"}}
-                    <span class="sidebar-category-badge" style="border: 1px solid #{{childCategory.color}};"></span>{{childCategory.name}}
+                    {{childCategory.name}}
                   {{/link-to}}
                   {{#if
                     (or 
-                      (and
-                        (eq currentRouteCategory childCategory.name)
-                        childCategory.has_children
-                      )
-                      (childIsActive currentRoute childCategory.slug)
+                      (eq currentRouteCategory childCategory.name)
+                      childCategory.has_children
                     )}}
-                    <ul class="category-sidebar-list">
+                    <ul class="category-sidebar-list subcategories">
                       {{#each childCategory.subcategories as |grandChildCategory|}}
-                        <li class="category-sidebar-list-item">
+                        <li class="category-sidebar-list-item grandchild" style="--category-color: #{{grandChildCategory.color}}">
                           {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" grandChildCategory.slug "/" grandChildCategory.id) class="category-sidebar-list-item-link subcategory-item grandchild"}}
-                            <span class="sidebar-category-badge" style="border: 1px solid #{{grandChildCategory.color}};"></span>{{grandChildCategory.name}}
+                            {{grandChildCategory.name}}
                           {{/link-to}}
                         </li>
                       {{/each}}
