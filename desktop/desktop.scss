@@ -15,9 +15,12 @@
     }
     grid-template-areas: "sidebar navigation" "sidebar content";
     grid-template-rows: 65px 1fr;
-    .category-sidebar-outlet {
+    .category-sidebar-outlet,
+    .list-controls + .loading-container + span {
       grid-area: sidebar;
     }
+
+    
 
     .list-controls {
       grid-area: navigation;
@@ -33,9 +36,6 @@
   #main-container + div {
     grid-row-start: navigation;
     grid-row-end: content;
-  }
-  &.category:not(.forza-hero-home):not(.categories-list) #main-outlet {
-    grid-template-rows: 120px 1fr;
   }
 }
 
@@ -65,6 +65,7 @@
           margin: 0.75em 0 0 0;
           height: auto;
           opacity: 1;
+          visibility: visible;
         }
       }
       .subcategories {
@@ -72,6 +73,7 @@
         height: 0px;
         opacity: 0;
         overflow: hidden;
+        visibility: hidden;
       }
       background: var(--primary-low);
       &:not(.child):not(.grandchild) {
