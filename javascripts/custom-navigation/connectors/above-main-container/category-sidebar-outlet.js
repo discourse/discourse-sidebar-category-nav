@@ -8,7 +8,6 @@ export default {
 
       @discourseComputed("router.currentRouteName")
       showOnRoute(currentRouteName) {
-        console.log(currentRouteName);
         if (currentRouteName.indexOf("topic") > -1) {
           return true;
         } else {
