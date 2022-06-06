@@ -6,7 +6,7 @@ registerUnbound("childIsActive", (currentRoute, parentSlug) => {
     !currentRoute.attributes ||
     !currentRoute.attributes.category
   )
-    return false;
+    {return false;}
 
   let currentPath =
     currentRoute.attributes.modelParams.category_slug_path_with_id;
