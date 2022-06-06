@@ -20,7 +20,9 @@ export default Component.extend({
 
   @discourseComputed()
   categoriesLoaded() {
-    if (this.siteSettings.login_required && !this.currentUser) {return false;}
+    if (this.siteSettings.login_required && !this.currentUser) {
+      return false;
+    }
     return Category.list().length !== 0;
   },
 
@@ -37,7 +39,7 @@ export default Component.extend({
     // using the site.categoriesList only allows categories visible to the current user to be shown
     // this prevents private categories showing up if they are in the list the admin decides to allow
     // in the sidebar
-    return categoriesList.filter(category => {
+    return categoriesList.filter((category) => {
       return !category.parentCategory;
     });
   },
@@ -75,5 +77,5 @@ export default Component.extend({
     }
 
     return currentRoute;
-  }
+  },
 });
