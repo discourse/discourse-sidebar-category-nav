@@ -8,7 +8,8 @@ export default {
 
       @discourseComputed("router.currentRouteName")
       showOnRoute(currentRouteName) {
-        if (currentRouteName.indexOf("discovery") > -1) {
+        console.log(currentRouteName);
+        if (currentRouteName.indexOf("discovery") > -1 || currentRouteName.indexOf("tag") > -1) {
           return true;
         } else {
           return false;

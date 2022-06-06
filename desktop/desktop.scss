@@ -16,7 +16,8 @@
     grid-template-areas: "sidebar navigation" "sidebar content";
     grid-template-rows: 65px 1fr;
     .category-sidebar-outlet,
-    .list-controls + .loading-container + span {
+    .list-controls + .loading-container + span,
+    .dismiss-container-top + span {
       grid-area: sidebar;
     }
 
