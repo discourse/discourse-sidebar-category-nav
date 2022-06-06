@@ -1,5 +1,5 @@
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
 import Category from "discourse/models/category";
 import { action } from "@ember/object";
@@ -9,13 +9,30 @@ export default Component.extend({
   router: service(),
   tagName: "",
 
+  didInsertElement() {
+    this._super(...arguments);
+    this._updateBodyClasses();
+  },
+  willDestroyElement() {
+    this._super(...arguments);
+    this._updateBodyClasses();
+  },
+
+  @observes("shouldShow")
+  _updateBodyClasses() {
+    const shouldCleanup = this.isDestroying || this.isDestroyed;
+    if (!shouldCleanup && this.shouldShow) {
+      document.body.classList.add("sidebar-navigation-shown");
+    } else {
+      document.body.classList.remove("sidebar-navigation-shown");
+    }
+  },
+
   @discourseComputed("categoriesLoaded", "allowedPage")
   shouldShow(categoriesLoaded, allowedPage) {
     if (categoriesLoaded && allowedPage) {
-      document.body.classList.add("sidebar-navigation-shown");
       return true;
     } else {
-      document.body.classList.remove("sidebar-navigation-shown");
       return false;
     }
   },
