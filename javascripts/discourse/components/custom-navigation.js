@@ -10,28 +10,26 @@ export default Component.extend({
   tagName: "",
 
   didInsertElement() {
-    console.log(this);
     this._super(...arguments);
-    this._updateBodyClasses();
+    console.log("creating", this.placement);
+    this._addBodyClasses();
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this._updateBodyClasses();
+    console.log("destroying", this.placement);
+    document.body.classList.remove(`sidebar-navigation-shown`);
   },
 
-  _updateBodyClasses() {
-    const shouldCleanup = this.isDestroying || this.isDestroyed;
-    if (!shouldCleanup && this.shouldShow) {
-      document.body.classList.add(`sidebar-navigation-shown`);
-    } else {
-      document.body.classList.remove("sidebar-navigation-shown");
+  _addBodyClasses(){
+    if (this.shouldShow) {
+      document.body.classList.add("sidebar-navigation-shown");
     }
   },
 
-  @discourseComputed("categoriesLoaded")
-  shouldShow(categoriesLoaded) {
-    if (categoriesLoaded) {
+  @discourseComputed("categoriesLoaded", "allowedPage")
+  shouldShow(categoriesLoaded, allowedPage) {
+    if (categoriesLoaded && allowedPage) {
       return true;
     } else {
       return false;
@@ -42,6 +40,14 @@ export default Component.extend({
   categoriesLoaded() {
     if (this.siteSettings.login_required && !this.currentUser) return false;
     return Category.list().length !== 0;
+  },
+
+  @discourseComputed("router.currentRoute")
+  allowedPage(currentRoute) {
+    return (
+      !currentRoute?.name.includes("user") &&
+      !currentRoute?.name.includes("admin")
+    );
   },
 
   @discourseComputed("site.categoriesList")
