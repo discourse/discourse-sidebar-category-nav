@@ -17,10 +17,11 @@
               )
               (childIsActive currentRouteCategoryId sidebarCategory.id)
             ) 'show-children'
-          )}} 
+          )
+          }}
           style="--category-color: #{{sidebarCategory.color}}"
         >
-          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class=(concat sidebarCategory.slug " category-sidebar-list-item-link") current-when=(eq currentRouteCategoryId sidebarCategory.id)}}
+          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class="category-sidebar-list-item-link" current-when=(eq currentRouteCategoryId sidebarCategory.id)}}
             <span class="sidebar-category-badge"></span>{{sidebarCategory.name}}
           {{/link-to}}
           {{!-- 
