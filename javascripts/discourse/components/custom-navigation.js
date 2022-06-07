@@ -11,13 +11,11 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    console.log("creating", this.placement);
     this._addBodyClasses();
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    console.log("destroying", this.placement);
     document.body.classList.remove(`sidebar-navigation-shown`);
   },
 
@@ -27,9 +25,9 @@ export default Component.extend({
     }
   },
 
-  @discourseComputed("categoriesLoaded", "allowedPage")
-  shouldShow(categoriesLoaded, allowedPage) {
-    if (categoriesLoaded && allowedPage) {
+  @discourseComputed("categoriesLoaded")
+  shouldShow(categoriesLoaded) {
+    if (categoriesLoaded) {
       return true;
     } else {
       return false;
@@ -40,14 +38,6 @@ export default Component.extend({
   categoriesLoaded() {
     if (this.siteSettings.login_required && !this.currentUser) return false;
     return Category.list().length !== 0;
-  },
-
-  @discourseComputed("router.currentRoute")
-  allowedPage(currentRoute) {
-    return (
-      !currentRoute?.name.includes("user") &&
-      !currentRoute?.name.includes("admin")
-    );
   },
 
   @discourseComputed("site.categoriesList")
