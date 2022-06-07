@@ -12,15 +12,15 @@
           (if
             (or 
               (and
-                (eq currentRouteCategory sidebarCategory.name)
+                (eq currentRouteCategoryId sidebarCategory.id)
                 sidebarCategory.has_children
               )
-              (childIsActive currentRoute sidebarCategory.slug)
+              (childIsActive currentRouteCategoryId sidebarCategory.id)
             ) 'show-children'
           )}} 
           style="--category-color: #{{sidebarCategory.color}}"
         >
-          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class=(concat sidebarCategory.slug " category-sidebar-list-item-link")}}
+          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" sidebarCategory.id) class=(concat sidebarCategory.slug " category-sidebar-list-item-link") current-when=(eq currentRouteCategoryId sidebarCategory.id)}}
             <span class="sidebar-category-badge"></span>{{sidebarCategory.name}}
           {{/link-to}}
           {{!-- 
@@ -29,23 +29,23 @@
           {{#if
             (or 
               sidebarCategory.has_children
-              (childIsActive currentRoute sidebarCategory.slug)
+              (childIsActive currentRouteCategoryId sidebarCategory.id)
             )}}
             <ul class="category-sidebar-list subcategories">
               {{#each sidebarCategory.subcategories as |childCategory|}}
                 <li class="category-sidebar-list-item child" style="--category-color: #{{childCategory.color}}">
-                  {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" childCategory.id) class="category-sidebar-list-item-link subcategory-item"}}
+                  {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" childCategory.id) class="category-sidebar-list-item-link subcategory-item" current-when=(eq currentRouteCategoryId childCategory.id)}}
                     {{childCategory.name}}
                   {{/link-to}}
                   {{#if
                     (or 
-                      (eq currentRouteCategory childCategory.name)
+                      (eq currentRouteCategoryId childCategory.id)
                       childCategory.has_children
                     )}}
                     <ul class="category-sidebar-list subcategories">
                       {{#each childCategory.subcategories as |grandChildCategory|}}
                         <li class="category-sidebar-list-item grandchild" style="--category-color: #{{grandChildCategory.color}}">
-                          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" grandChildCategory.slug "/" grandChildCategory.id) class="category-sidebar-list-item-link subcategory-item grandchild"}}
+                          {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" grandChildCategory.slug "/" grandChildCategory.id) class="category-sidebar-list-item-link subcategory-item grandchild"  current-when=(eq currentRouteCategoryId grandChildCategory.id)}}
                             {{grandChildCategory.name}}
                           {{/link-to}}
                         </li>
