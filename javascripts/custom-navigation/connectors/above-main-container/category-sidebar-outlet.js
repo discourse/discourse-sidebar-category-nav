@@ -1,19 +1,8 @@
-import discourseComputed from "discourse-common/utils/decorators";
-import { inject as service } from "@ember/service";
+import { getOwner } from "discourse-common/lib/get-owner";
 
 export default {
-  setupComponent() {
-    this.reopen({
-      router: service(),
-
-      @discourseComputed("router.currentRouteName")
-      showOnRoute(currentRouteName) {
-        if (currentRouteName.indexOf("topic") > -1) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    });
-  }
+  shouldRender(args, component) {
+    const router = getOwner(this).lookup("router:main");
+    return router.currentRouteName.includes("topic");
+  },
 };
