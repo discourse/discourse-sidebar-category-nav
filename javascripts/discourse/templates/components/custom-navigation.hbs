@@ -43,7 +43,7 @@
                       (eq currentRouteCategoryId childCategory.id)
                       childCategory.has_children
                     )}}
-                    <ul class="category-sidebar-list subcategories">
+                    <ul class="category-sidebar-list sub-subcategories">
                       {{#each childCategory.subcategories as |grandChildCategory|}}
                         <li class="category-sidebar-list-item grandchild" style="--category-color: #{{grandChildCategory.color}}">
                           {{#link-to "discovery.category" (concat sidebarCategory.slug "/" childCategory.slug "/" grandChildCategory.slug "/" grandChildCategory.id) class="category-sidebar-list-item-link subcategory-item grandchild"  current-when=(eq currentRouteCategoryId grandChildCategory.id)}}

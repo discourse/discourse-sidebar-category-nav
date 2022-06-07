@@ -44,6 +44,8 @@
     top: calc(var(--header-offset) + 2em);
     border-radius: 4px;
     border: 1px solid var(--secondary-very-high);
+    display: block;
+    visibility: visible;
     &:empty {
       border: none;
     }
@@ -67,6 +69,10 @@
             height: auto;
             opacity: 1;
             visibility: visible;
+            &:empty {
+              display: none !important;
+              visibility: hidden !important;
+            }
           }
         }
         .subcategories {
@@ -121,4 +127,9 @@
       background-color: var(--category-color);
     }
   }
+}
+
+.category-sidebar-outlet {
+  display: none;
+  visibility: hidden;
 }
