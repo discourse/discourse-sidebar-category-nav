@@ -44,6 +44,9 @@
     top: calc(var(--header-offset) + 2em);
     border-radius: 4px;
     border: 1px solid var(--secondary-very-high);
+    &:empty {
+      border: none;
+    }
     &::-webkit-scrollbar-thumb {
       background-color: var(--primary-low);
       border-radius: 8px;

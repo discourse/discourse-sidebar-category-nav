@@ -19,15 +19,21 @@ export default Component.extend({
     document.body.classList.remove(`sidebar-navigation-shown`);
   },
 
-  _addBodyClasses(){
+  _addBodyClasses() {
     if (this.shouldShow) {
-      document.body.classList.add("sidebar-navigation-shown");
+      document.body.classList.add(`sidebar-navigation-shown`);
     }
   },
 
-  @discourseComputed("categoriesLoaded")
-  shouldShow(categoriesLoaded) {
-    if (categoriesLoaded) {
+  @discourseComputed("categoriesLoaded", "placement", "router.currentRoute")
+  shouldShow(categoriesLoaded, placement, currentRoute) {
+    const allowedRoute =
+      (placement === "above-main-container" &&
+        currentRoute.name.includes("topic")) ||
+      (placement === "discovery-above" &&
+        (currentRoute.name.includes("discovery") ||
+          currentRoute.name.includes("tag")));
+    if (categoriesLoaded && allowedRoute) {
       return true;
     } else {
       return false;
