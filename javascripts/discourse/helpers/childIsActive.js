@@ -1,15 +1,19 @@
 import { registerUnbound } from "discourse-common/lib/helpers";
+import Category from "discourse/models/category";
 
-registerUnbound("childIsActive", (currentRoute, parentSlug) => {
-  if (
-    !currentRoute ||
-    !currentRoute.attributes ||
-    !currentRoute.attributes.category
-  )
+registerUnbound("childIsActive", (categoryId, parentCategoryId) => {
+  const c = Category.findById(categoryId);
+  if (!c) {
     return false;
+  }
 
-  let currentPath =
-    currentRoute.attributes.modelParams.category_slug_path_with_id;
+  if (c.parentCategory?.id === parentCategoryId) {
+    return true;
+  }
 
-  return currentPath.includes(parentSlug);
+  if (c.parentCategory?.parentCategory?.id === parentCategoryId) {
+    return true;
+  }
+
+  return false;
 });
