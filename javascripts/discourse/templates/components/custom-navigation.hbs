@@ -22,7 +22,9 @@
               "show-children"
             )
           }}
-          style="--category-color: #{{sidebarCategory.color}}"
+          style={{html-safe
+            (concat "--category-color: #" sidebarCategory.color ";")
+          }}
         >
           {{#link-to
             "discovery.category"
@@ -33,9 +35,6 @@
             <span class="sidebar-category-badge"></span>{{sidebarCategory.name}}
           {{/link-to}}
 
-          {{!
-          2) Has a child category / the user is currently viewing
-          }}
           {{#if
             (or
               sidebarCategory.has_children
@@ -46,7 +45,9 @@
               {{#each sidebarCategory.subcategories as |childCategory|}}
                 <li
                   class="category-sidebar-list-item child"
-                  style="--category-color: #{{childCategory.color}}"
+                  style={{html-safe
+                    (concat "--category-color: #" childCategory.color ";")
+                  }}
                 >
                   {{#link-to
                     "discovery.category"
@@ -76,7 +77,11 @@
                       }}
                         <li
                           class="category-sidebar-list-item grandchild"
-                          style="--category-color: #{{grandChildCategory.color}}"
+                          style={{html-safe
+                            (concat
+                              "--category-color: #" grandChildCategory.color ";"
+                            )
+                          }}
                         >
                           {{#link-to
                             "discovery.category"
