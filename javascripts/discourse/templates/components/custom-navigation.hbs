@@ -17,7 +17,7 @@
                   (eq currentRouteCategoryId sidebarCategory.id)
                   sidebarCategory.has_children
                 )
-                (childIsActive currentRouteCategoryId sidebarCategory.id)
+                (child-is-active currentRouteCategoryId sidebarCategory.id)
               )
               "show-children"
             )
@@ -38,7 +38,7 @@
           {{#if
             (or
               sidebarCategory.has_children
-              (childIsActive currentRouteCategoryId sidebarCategory.id)
+              (child-is-active currentRouteCategoryId sidebarCategory.id)
             )
           }}
             <ul class="category-sidebar-list subcategories">
