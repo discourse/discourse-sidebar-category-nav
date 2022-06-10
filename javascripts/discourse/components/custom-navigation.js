@@ -1,81 +1,27 @@
 import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
-import Category from "discourse/models/category";
+import { readOnly } from "@ember/object/computed";
 
 export default Component.extend({
+  customNavigation: service(),
   router: service(),
   tagName: "",
 
-  @discourseComputed("categoriesLoaded", "allowedPage")
-  shouldShow(categoriesLoaded, allowedPage) {
-    if (categoriesLoaded && allowedPage) {
-      document.body.classList.add("sidebar-navigation-shown");
-      return true;
-    } else {
-      document.body.classList.remove("sidebar-navigation-shown");
-      return false;
-    }
-  },
+  currentRoute: readOnly("router.currentRoute"),
+  currentRouteCategoryId: readOnly("customNavigation.currentRouteCategoryId"),
+  sidebarCategories: readOnly("customNavigation.sidebarCategories"),
 
-  @discourseComputed()
-  categoriesLoaded() {
-    if (this.siteSettings.login_required && !this.currentUser) {
-      return false;
+  @discourseComputed(
+    "placement",
+    "customNavigation.renderAboveMainContainer",
+    "customNavigation.renderDiscoveryAbove"
+  )
+  shouldShow(placement, renderAboveMainContainer, renderDiscoveryAbove) {
+    if (placement === "above-main-container") {
+      return renderAboveMainContainer;
+    } else if (placement === "discovery-above") {
+      return renderDiscoveryAbove;
     }
-    return Category.list().length !== 0;
-  },
-
-  @discourseComputed("router.currentRoute")
-  allowedPage(currentRoute) {
-    return (
-      !currentRoute?.name.includes("user") &&
-      !currentRoute?.name.includes("admin")
-    );
-  },
-
-  @discourseComputed("site.categoriesList")
-  sidebarCategories(categoriesList) {
-    // using the site.categoriesList only allows categories visible to the current user to be shown
-    // this prevents private categories showing up if they are in the list the admin decides to allow
-    // in the sidebar
-    return categoriesList.filter((category) => {
-      return !category.parentCategory;
-    });
-  },
-
-  @discourseComputed("router.currentRoute")
-  currentRouteCategory(currentRoute) {
-    if (!currentRoute?.attributes) {
-      return false;
-    }
-    if (
-      !currentRoute.name === "discovery.category" ||
-      !currentRoute.attributes.category
-    ) {
-      return false;
-    }
-    return currentRoute.attributes.category.name;
-  },
-
-  @discourseComputed("router.currentRoute")
-  currentRoute(currentRoute) {
-    if (!currentRoute?.attributes) {
-      return false;
-    }
-    if (
-      currentRoute.name !== "discovery.category" ||
-      !currentRoute.attributes.category
-    ) {
-      return false;
-    }
-    if (
-      currentRoute.name !== "discovery.category" ||
-      !currentRoute.attributes.category.parentCategory
-    ) {
-      return false;
-    }
-
-    return currentRoute;
   },
 });
