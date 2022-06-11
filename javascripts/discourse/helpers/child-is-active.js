@@ -1,7 +1,7 @@
 import { registerUnbound } from "discourse-common/lib/helpers";
 import Category from "discourse/models/category";
 
-registerUnbound("childIsActive", (categoryId, parentCategoryId) => {
+registerUnbound("child-is-active", (categoryId, parentCategoryId) => {
   const c = Category.findById(categoryId);
   if (!c) {
     return false;
