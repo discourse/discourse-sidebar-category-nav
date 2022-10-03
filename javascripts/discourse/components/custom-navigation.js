@@ -28,28 +28,21 @@ export default Component.extend({
 
   @action
   toggleSection(e) {
-    e.stopPropagation();
-
-    let closest = e.target.closest(".category-sidebar-list-item__parent");
-    closest.classList.toggle("show-children");
-
-    if (settings.accordion_expansion) {
-      const expandedItems = document.querySelectorAll(
-        ".category-sidebar-list-item__parent"
-      );
-
-      expandedItems.forEach((item) => {
-        if (item !== closest) {
-          item.classList.remove("show-children");
-        }
-      });
-    }
-  },
-
-  @action
-  boxClick(e) {
     if (e.target.nodeName !== "A") {
-      this.send("toggleSection", e);
+      let closest = e.target.closest(".category-sidebar-list-item__parent");
+      closest.classList.toggle("show-children");
+
+      if (settings.accordion_expansion) {
+        const expandedItems = document.querySelectorAll(
+          ".category-sidebar-list-item__parent"
+        );
+
+        expandedItems.forEach((item) => {
+          if (item !== closest) {
+            item.classList.remove("show-children");
+          }
+        });
+      }
     }
   },
 });

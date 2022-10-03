@@ -10,7 +10,7 @@
       {{#each sidebarCategories as |sidebarCategory|}}
         <li
           role="button"
-          {{on "click" boxClick}}
+          {{on "click" toggleSection}}
           class={{concat
             "category-sidebar-list-item category-sidebar-list-item__parent "
             (if
@@ -42,7 +42,6 @@
             {{#if sidebarCategory.has_children}}
               <div
                 class="sidebar-category-toggle"
-                {{on "click" toggleSection}}
               >
                 {{d-icon "chevron-right"}}
               </div>
