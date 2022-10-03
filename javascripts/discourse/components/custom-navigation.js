@@ -48,7 +48,7 @@ export default Component.extend({
 
   @action
   boxClick(e) {
-    if (e.target.nodeName != "A") {
+    if (e.target.nodeName !== "A") {
       this.send("toggleSection", e);
     }
   },
