@@ -3,3 +3,7 @@ sidebar_categories:
   list_type: category
   default: ""
   description: "Choose which categories to show in a user's sidebar"
+
+accordion_expansion:
+  default: true
+  description: "When enabled, opening one sidebar menu will close the others"
