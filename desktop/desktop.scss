@@ -131,7 +131,7 @@
       .sidebar-category-toggle {
         cursor: pointer;
         margin-left: auto;
-        color: #4f4f4f;
+        color: var(--primary-low-mid);
         height: 100%;
         padding: 0 0 0 0.5em;
         transition: all 0.25s;
@@ -144,7 +144,7 @@
       a:hover,
       a:focus {
         + .sidebar-category-toggle {
-          color: #4f4f4f !important;
+          color: var(--primary-low-mid) !important;
         }
       }
     }
@@ -177,7 +177,7 @@
 
 .category-sidebar-list-item__parent:has(.subcategories:hover) {
   .sidebar-category-toggle {
-    color: #4f4f4f;
+    color: var(--primary-low-mid);
   }
 }
 
