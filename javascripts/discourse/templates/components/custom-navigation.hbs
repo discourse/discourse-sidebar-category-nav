@@ -9,8 +9,10 @@
 
       {{#each sidebarCategories as |sidebarCategory|}}
         <li
+          role="button"
+          {{on "click" toggleSection}}
           class={{concat
-            "category-sidebar-list-item "
+            "category-sidebar-list-item category-sidebar-list-item__parent "
             (if
               (or
                 (and
@@ -26,15 +28,25 @@
             (concat "--category-color: #" sidebarCategory.color ";")
           }}
         >
-          {{#link-to
-            "discovery.category"
-            (concat sidebarCategory.slug "/" sidebarCategory.id)
-            class="category-sidebar-list-item-link"
-            current-when=(eq currentRouteCategoryId sidebarCategory.id)
-          }}
-            <span class="sidebar-category-badge"></span>{{sidebarCategory.name}}
-          {{/link-to}}
-
+          <div class="category-sidebar-list-item__parent-container">
+            {{#link-to
+              "discovery.category"
+              (concat sidebarCategory.slug "/" sidebarCategory.id)
+              class="category-sidebar-list-item-link"
+              current-when=(eq currentRouteCategoryId sidebarCategory.id)
+            }}
+              <span
+                class="sidebar-category-badge"
+              ></span>{{sidebarCategory.name}}
+            {{/link-to}}
+            {{#if sidebarCategory.has_children}}
+              <div
+                class="sidebar-category-toggle"
+              >
+                {{d-icon "chevron-right"}}
+              </div>
+            {{/if}}
+          </div>
           {{#if
             (or
               sidebarCategory.has_children
@@ -44,7 +56,8 @@
             <ul class="category-sidebar-list subcategories">
               {{#each sidebarCategory.subcategories as |childCategory|}}
                 <li
-                  class="category-sidebar-list-item child"
+                  class="category-sidebar-list-item child
+                    {{if childCategory.subcategories "has-children"}}"
                   style={{html-safe
                     (concat "--category-color: #" childCategory.color ";")
                   }}

@@ -1,3 +1,4 @@
+import { action } from "@ember/object";
 import Component from "@ember/component";
 import discourseComputed from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
@@ -22,6 +23,26 @@ export default Component.extend({
       return renderAboveMainContainer;
     } else if (placement === "discovery-above") {
       return renderDiscoveryAbove;
+    }
+  },
+
+  @action
+  toggleSection(e) {
+    if (e.target.nodeName !== "A") {
+      let closest = e.target.closest(".category-sidebar-list-item__parent");
+      closest.classList.toggle("show-children");
+
+      if (settings.accordion_expansion) {
+        const expandedItems = document.querySelectorAll(
+          ".category-sidebar-list-item__parent"
+        );
+
+        expandedItems.forEach((item) => {
+          if (item !== closest) {
+            item.classList.remove("show-children");
+          }
+        });
+      }
     }
   },
 });
