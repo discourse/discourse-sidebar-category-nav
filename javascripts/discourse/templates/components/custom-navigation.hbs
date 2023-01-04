@@ -40,9 +40,7 @@
               ></span>{{sidebarCategory.name}}
             {{/link-to}}
             {{#if sidebarCategory.has_children}}
-              <div
-                class="sidebar-category-toggle"
-              >
+              <div class="sidebar-category-toggle">
                 {{d-icon "chevron-right"}}
               </div>
             {{/if}}
@@ -57,7 +55,7 @@
               {{#each sidebarCategory.subcategories as |childCategory|}}
                 <li
                   class="category-sidebar-list-item child
-                    {{if childCategory.subcategories "has-children"}}"
+                    {{if childCategory.subcategories 'has-children'}}"
                   style={{html-safe
                     (concat "--category-color: #" childCategory.color ";")
                   }}
