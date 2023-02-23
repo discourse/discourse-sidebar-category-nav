@@ -36,6 +36,11 @@
     grid-row-start: navigation;
     grid-row-end: content;
   }
+
+  #main-container + .container {
+    display: none;
+  }
+
   .category-sidebar-outlet {
     max-height: calc(100vh - var(--header-offset) - 18.5em);
     overflow-y: scroll;
