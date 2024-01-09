@@ -2,7 +2,10 @@
   <div class="category-sidebar">
     <ul class="category-sidebar-list">
       <li class="category-sidebar-list-item all-topics">
-        <LinkTo @route="discovery.latest" class="category-sidebar-list-item-link">
+        <LinkTo
+          @route="discovery.latest"
+          class="category-sidebar-list-item-link"
+        >
           All Topics
         </LinkTo>
       </li>
@@ -33,7 +36,7 @@
               @route="discovery.category"
               @model={{concat sidebarCategory.slug "/" sidebarCategory.id}}
               class="category-sidebar-list-item-link"
-              @current-when=(eq currentRouteCategoryId sidebarCategory.id)
+              @current-when={{eq currentRouteCategoryId sidebarCategory.id}}
             >
               <span
                 class="sidebar-category-badge"
@@ -62,15 +65,15 @@
                 >
                   <LinkTo
                     @route="discovery.category"
-                    @model=(concat
+                    @model={{concat
                       sidebarCategory.slug
                       "/"
                       childCategory.slug
                       "/"
                       childCategory.id
-                    )
+                    }}
                     class="category-sidebar-list-item-link subcategory-item"
-                    @current-when=(eq currentRouteCategoryId childCategory.id)
+                    @current-when={{eq currentRouteCategoryId childCategory.id}}
                   >
                     {{childCategory.name}}
                   </LinkTo>
@@ -96,7 +99,7 @@
                         >
                           <LinkTo
                             @route="discovery.category"
-                            @model=(concat
+                            @model={{concat
                               sidebarCategory.slug
                               "/"
                               childCategory.slug
@@ -104,11 +107,12 @@
                               grandChildCategory.slug
                               "/"
                               grandChildCategory.id
-                            )
+                            }}
                             class="category-sidebar-list-item-link subcategory-item grandchild"
-                            @current-when=(eq
-                              currentRouteCategoryId grandChildCategory.id
-                            )
+                            @current-when={{eq
+                              currentRouteCategoryId
+                              grandChildCategory.id
+                            }}
                           >
                             {{grandChildCategory.name}}
                           </LinkTo>
