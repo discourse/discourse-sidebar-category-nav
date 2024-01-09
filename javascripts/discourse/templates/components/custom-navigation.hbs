@@ -31,7 +31,7 @@
           <div class="category-sidebar-list-item__parent-container">
             <LinkTo
               @route="discovery.category"
-              @model=(concat sidebarCategory.slug "/" sidebarCategory.id)
+              @model={{concat sidebarCategory.slug "/" sidebarCategory.id}}
               class="category-sidebar-list-item-link"
               @current-when=(eq currentRouteCategoryId sidebarCategory.id)
             >
