@@ -2,9 +2,9 @@
   <div class="category-sidebar">
     <ul class="category-sidebar-list">
       <li class="category-sidebar-list-item all-topics">
-        {{#link-to "discovery.latest" class="category-sidebar-list-item-link"}}
+        <LinkTo @route="discovery.latest" class="category-sidebar-list-item-link">
           All Topics
-        {{/link-to}}
+        </LinkTo>
       </li>
 
       {{#each sidebarCategories as |sidebarCategory|}}
@@ -29,16 +29,16 @@
           }}
         >
           <div class="category-sidebar-list-item__parent-container">
-            {{#link-to
-              "discovery.category"
-              (concat sidebarCategory.slug "/" sidebarCategory.id)
+            <LinkTo
+              @route="discovery.category"
+              @model=(concat sidebarCategory.slug "/" sidebarCategory.id)
               class="category-sidebar-list-item-link"
-              current-when=(eq currentRouteCategoryId sidebarCategory.id)
-            }}
+              @current-when=(eq currentRouteCategoryId sidebarCategory.id)
+            >
               <span
                 class="sidebar-category-badge"
               ></span>{{sidebarCategory.name}}
-            {{/link-to}}
+            </LinkTo>
             {{#if sidebarCategory.has_children}}
               <div class="sidebar-category-toggle">
                 {{d-icon "chevron-right"}}
@@ -60,9 +60,9 @@
                     (concat "--category-color: #" childCategory.color ";")
                   }}
                 >
-                  {{#link-to
-                    "discovery.category"
-                    (concat
+                  <LinkTo
+                    @route="discovery.category"
+                    @model=(concat
                       sidebarCategory.slug
                       "/"
                       childCategory.slug
@@ -70,10 +70,10 @@
                       childCategory.id
                     )
                     class="category-sidebar-list-item-link subcategory-item"
-                    current-when=(eq currentRouteCategoryId childCategory.id)
-                  }}
+                    @current-when=(eq currentRouteCategoryId childCategory.id)
+                  >
                     {{childCategory.name}}
-                  {{/link-to}}
+                  </LinkTo>
 
                   {{#if
                     (or
@@ -94,9 +94,9 @@
                             )
                           }}
                         >
-                          {{#link-to
-                            "discovery.category"
-                            (concat
+                          <LinkTo
+                            @route="discovery.category"
+                            @model=(concat
                               sidebarCategory.slug
                               "/"
                               childCategory.slug
@@ -106,12 +106,12 @@
                               grandChildCategory.id
                             )
                             class="category-sidebar-list-item-link subcategory-item grandchild"
-                            current-when=(eq
+                            @current-when=(eq
                               currentRouteCategoryId grandChildCategory.id
                             )
-                          }}
+                          >
                             {{grandChildCategory.name}}
-                          {{/link-to}}
+                          </LinkTo>
                         </li>
                       {{/each}}
                     </ul>
