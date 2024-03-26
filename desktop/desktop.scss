@@ -81,9 +81,7 @@
           }
         }
         .subcategories {
-          transition:
-            height 0.2s ease-in-out,
-            opacity 1s ease-in-out;
+          transition: height 0.2s ease-in-out, opacity 1s ease-in-out;
           height: 0px;
           opacity: 0;
           overflow: hidden;

@@ -46,7 +46,7 @@
                 role="button"
                 tabindex="0"
                 {{on "click" toggleSection}}
-                {{on "keydown" toggleSection}}
+                {{on "keyup" toggleSection}}
                 aria-expanded={{if
                   (or
                     (and
@@ -75,7 +75,7 @@
           }}
             <ul
               class="category-sidebar-list subcategories"
-              id="{{concat 'category-sidebar-list-' sidebarCategory.id}}"
+              id={{concat "category-sidebar-list-" sidebarCategory.id}}
             >
               {{#each sidebarCategory.subcategories as |childCategory|}}
                 <li
