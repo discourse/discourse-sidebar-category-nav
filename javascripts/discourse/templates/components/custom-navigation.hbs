@@ -12,8 +12,6 @@
 
       {{#each sidebarCategories as |sidebarCategory|}}
         <li
-          role="button"
-          {{on "click" toggleSection}}
           class={{concat
             "category-sidebar-list-item category-sidebar-list-item__parent "
             (if
@@ -43,7 +41,28 @@
               ></span>{{sidebarCategory.name}}
             </LinkTo>
             {{#if sidebarCategory.has_children}}
-              <div class="sidebar-category-toggle">
+              <div
+                class="sidebar-category-toggle"
+                role="button"
+                tabindex="0"
+                {{on "click" toggleSection}}
+                {{on "keydown" toggleSection}}
+                aria-expanded={{if
+                  (or
+                    (and
+                      (eq currentRouteCategoryId sidebarCategory.id)
+                      sidebarCategory.has_children
+                    )
+                    (child-is-active currentRouteCategoryId sidebarCategory.id)
+                  )
+                  "true"
+                  "false"
+                }}
+                aria-controls={{concat
+                  "category-sidebar-list-"
+                  sidebarCategory.id
+                }}
+              >
                 {{d-icon "chevron-right"}}
               </div>
             {{/if}}
@@ -54,7 +73,10 @@
               (child-is-active currentRouteCategoryId sidebarCategory.id)
             )
           }}
-            <ul class="category-sidebar-list subcategories">
+            <ul
+              class="category-sidebar-list subcategories"
+              id="{{concat 'category-sidebar-list-' sidebarCategory.id}}"
+            >
               {{#each sidebarCategory.subcategories as |childCategory|}}
                 <li
                   class="category-sidebar-list-item child
