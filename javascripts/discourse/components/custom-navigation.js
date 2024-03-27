@@ -1,8 +1,8 @@
-import { action } from "@ember/object";
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
-import { inject as service } from "@ember/service";
+import { action } from "@ember/object";
 import { readOnly } from "@ember/object/computed";
+import { service } from "@ember/service";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Component.extend({
   customNavigation: service(),
