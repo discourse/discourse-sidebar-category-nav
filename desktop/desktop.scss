@@ -140,23 +140,15 @@
         height: 100%;
         padding: 0 0 0 0.5em;
         transition: all 0.25s;
-        &:hover,
-        &:focus {
+        &:hover {
           color: var(--primary);
-        }
-      }
-
-      a:hover,
-      a:focus {
-        + .sidebar-category-toggle {
-          color: var(--primary-low-mid) !important;
         }
       }
     }
 
-    &:hover {
-      cursor: pointer;
-      .sidebar-category-toggle {
+    .sidebar-category-toggle {
+      &:hover {
+        cursor: pointer;
         color: var(--primary);
       }
     }
@@ -177,12 +169,6 @@
 
   a {
     padding: 0 0 0.75em 0;
-  }
-}
-
-.category-sidebar-list-item__parent:has(.subcategories:hover) {
-  .sidebar-category-toggle {
-    color: var(--primary-low-mid);
   }
 }
 

@@ -28,20 +28,33 @@ export default Component.extend({
 
   @action
   toggleSection(e) {
-    if (e.target.nodeName !== "A") {
-      let closest = e.target.closest(".category-sidebar-list-item__parent");
-      closest.classList.toggle("show-children");
+    if (
+      e.target.nodeName !== "A" &&
+      (e.type === "click" || (e.type === "keydown" && e.key === "Enter"))
+    ) {
+      const currentParent = e.target.closest(
+        ".category-sidebar-list-item__parent"
+      );
+      const toggle = currentParent.querySelector(".sidebar-category-toggle");
+
+      currentParent.classList.toggle("show-children");
+      toggle.setAttribute(
+        "aria-expanded",
+        toggle.getAttribute("aria-expanded") === "false"
+      );
 
       if (settings.accordion_expansion) {
-        const expandedItems = document.querySelectorAll(
-          ".category-sidebar-list-item__parent"
-        );
-
-        expandedItems.forEach((item) => {
-          if (item !== closest) {
-            item.classList.remove("show-children");
-          }
-        });
+        // toggle state of all shown items
+        document
+          .querySelectorAll(".category-sidebar-list-item__parent.show-children")
+          .forEach((item) => {
+            if (item !== currentParent) {
+              item.classList.remove("show-children");
+              item
+                .querySelector(".sidebar-category-toggle")
+                .setAttribute("aria-expanded", "false");
+            }
+          });
       }
     }
   },
