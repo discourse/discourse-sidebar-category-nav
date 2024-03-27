@@ -30,7 +30,7 @@ export default Component.extend({
   toggleSection(e) {
     if (
       e.target.nodeName !== "A" &&
-      (e.type === "click" || (e.type === "keydown" && e.key === "Enter"))
+      (e.type === "click" || (e.type === "keyup" && e.key === "Enter"))
     ) {
       const currentParent = e.target.closest(
         ".category-sidebar-list-item__parent"
