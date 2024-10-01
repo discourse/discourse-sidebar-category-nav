@@ -1,3 +1,4 @@
 en:
   theme_metadata:
     description: ""
+  subcategory_toggle: "%{category} subcategories" 
