@@ -1,4 +1,4 @@
-{{#if shouldShow}}
+{{#if this.shouldShow}}
   <div class="category-sidebar">
     <ul class="category-sidebar-list">
       <li class="category-sidebar-list-item all-topics">
@@ -10,17 +10,17 @@
         </LinkTo>
       </li>
 
-      {{#each sidebarCategories as |sidebarCategory|}}
+      {{#each this.sidebarCategories as |sidebarCategory|}}
         <li
           class={{concat
             "category-sidebar-list-item category-sidebar-list-item__parent "
             (if
               (or
                 (and
-                  (eq currentRouteCategoryId sidebarCategory.id)
+                  (eq this.currentRouteCategoryId sidebarCategory.id)
                   sidebarCategory.has_children
                 )
-                (child-is-active currentRouteCategoryId sidebarCategory.id)
+                (child-is-active this.currentRouteCategoryId sidebarCategory.id)
               )
               "show-children"
             )
@@ -34,7 +34,10 @@
               @route="discovery.category"
               @model={{concat sidebarCategory.slug "/" sidebarCategory.id}}
               class="category-sidebar-list-item-link"
-              @current-when={{eq currentRouteCategoryId sidebarCategory.id}}
+              @current-when={{eq
+                this.currentRouteCategoryId
+                sidebarCategory.id
+              }}
             >
               <span
                 class="sidebar-category-badge"
@@ -45,15 +48,17 @@
                 class="sidebar-category-toggle"
                 role="button"
                 tabindex="0"
-                {{on "click" toggleSection}}
-                {{on "keyup" toggleSection}}
+                {{on "click" this.toggleSection}}
+                {{on "keyup" this.toggleSection}}
                 aria-expanded={{if
                   (or
                     (and
-                      (eq currentRouteCategoryId sidebarCategory.id)
+                      (eq this.currentRouteCategoryId sidebarCategory.id)
                       sidebarCategory.has_children
                     )
-                    (child-is-active currentRouteCategoryId sidebarCategory.id)
+                    (child-is-active
+                      this.currentRouteCategoryId sidebarCategory.id
+                    )
                   )
                   "true"
                   "false"
@@ -74,7 +79,7 @@
           {{#if
             (or
               sidebarCategory.has_children
-              (child-is-active currentRouteCategoryId sidebarCategory.id)
+              (child-is-active this.currentRouteCategoryId sidebarCategory.id)
             )
           }}
             <ul
@@ -99,14 +104,17 @@
                       childCategory.id
                     }}
                     class="category-sidebar-list-item-link subcategory-item"
-                    @current-when={{eq currentRouteCategoryId childCategory.id}}
+                    @current-when={{eq
+                      this.currentRouteCategoryId
+                      childCategory.id
+                    }}
                   >
                     {{childCategory.name}}
                   </LinkTo>
 
                   {{#if
                     (or
-                      (eq currentRouteCategoryId childCategory.id)
+                      (eq this.currentRouteCategoryId childCategory.id)
                       childCategory.has_children
                     )
                   }}
@@ -136,7 +144,7 @@
                             }}
                             class="category-sidebar-list-item-link subcategory-item grandchild"
                             @current-when={{eq
-                              currentRouteCategoryId
+                              this.currentRouteCategoryId
                               grandChildCategory.id
                             }}
                           >
