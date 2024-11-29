@@ -2,16 +2,17 @@ import Component from "@ember/component";
 import { action } from "@ember/object";
 import { readOnly } from "@ember/object/computed";
 import { service } from "@ember/service";
+import { tagName } from "@ember-decorators/component";
 import discourseComputed from "discourse-common/utils/decorators";
 
-export default Component.extend({
-  customNavigation: service(),
-  router: service(),
-  tagName: "",
+@tagName("")
+export default class CustomNavigation extends Component {
+  @service customNavigation;
+  @service router;
 
-  currentRoute: readOnly("router.currentRoute"),
-  currentRouteCategoryId: readOnly("customNavigation.currentRouteCategoryId"),
-  sidebarCategories: readOnly("customNavigation.sidebarCategories"),
+  @readOnly("router.currentRoute") currentRoute;
+  @readOnly("customNavigation.currentRouteCategoryId") currentRouteCategoryId;
+  @readOnly("customNavigation.sidebarCategories") sidebarCategories;
 
   @discourseComputed(
     "placement",
@@ -24,7 +25,7 @@ export default Component.extend({
     } else if (placement === "discovery-above") {
       return renderDiscoveryAbove;
     }
-  },
+  }
 
   @action
   toggleSection(e) {
@@ -57,5 +58,5 @@ export default Component.extend({
           });
       }
     }
-  },
-});
+  }
+}
