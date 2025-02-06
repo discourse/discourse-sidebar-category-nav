@@ -1,7 +1,7 @@
 import { computed } from "@ember/object";
 import Service, { service } from "@ember/service";
+import { bind } from "discourse/lib/decorators";
 import Site from "discourse/models/site";
-import { bind } from "discourse-common/utils/decorators";
 
 const CLASS_NAME = "sidebar-navigation-shown";
 
