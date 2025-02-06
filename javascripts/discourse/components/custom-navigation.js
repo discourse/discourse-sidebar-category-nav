@@ -3,7 +3,7 @@ import { action } from "@ember/object";
 import { readOnly } from "@ember/object/computed";
 import { service } from "@ember/service";
 import { tagName } from "@ember-decorators/component";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse/lib/decorators";
 
 @tagName("")
 export default class CustomNavigation extends Component {
