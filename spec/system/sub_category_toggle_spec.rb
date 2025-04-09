@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "My Theme Component", type: :system do
+describe "Sub Category Toggle", type: :system do
   let(:theme) do
     parent_theme = Fabricate(:theme, name: "Parent Theme")
     component = Fabricate(:theme, name: "Category Sidebar Navigation", component: true)
