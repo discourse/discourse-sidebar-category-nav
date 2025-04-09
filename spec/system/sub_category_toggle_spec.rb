@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 describe "My Theme Component", type: :system do
-  let(:theme) {
+  let(:theme) do
     parent_theme = Fabricate(:theme, name: "Parent Theme")
     component = Fabricate(:theme, name: "Category Sidebar Navigation", component: true)
     parent_theme.set_default!
-  }
+  end
 
   before do
     theme
@@ -20,12 +20,18 @@ describe "My Theme Component", type: :system do
     expect(page).to have_no_selector(".category-sidebar-list-item__parent.show-children")
     find(".sidebar-category-toggle").click
     expect(page).to have_selector(".category-sidebar-list-item__parent.show-children")
-    expect(page).to have_selector(".category-sidebar-list-item-link.subcategory-item", text: @subcategory.name)
+    expect(page).to have_selector(
+      ".category-sidebar-list-item-link.subcategory-item",
+      text: @subcategory.name,
+    )
   end
 
   it "displays subcategories when on category page" do
     visit("/c/#{@category.id}")
     expect(page).to have_selector(".category-sidebar-list-item__parent.show-children")
-    expect(page).to have_selector(".category-sidebar-list-item-link.subcategory-item", text: @subcategory.name)
+    expect(page).to have_selector(
+      ".category-sidebar-list-item-link.subcategory-item",
+      text: @subcategory.name,
+    )
   end
 end
