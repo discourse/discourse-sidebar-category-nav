@@ -9,7 +9,6 @@ import { tagName } from "@ember-decorators/component";
 import { and, eq, or } from "truth-helpers";
 import icon from "discourse/helpers/d-icon";
 import htmlSafe from "discourse/helpers/html-safe";
-import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 import childIsActive from "../helpers/child-is-active";
 
