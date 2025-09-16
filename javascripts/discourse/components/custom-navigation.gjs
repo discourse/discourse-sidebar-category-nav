@@ -22,19 +22,6 @@ export default class CustomNavigation extends Component {
   @readOnly("customNavigation.currentRouteCategoryId") currentRouteCategoryId;
   @readOnly("customNavigation.sidebarCategories") sidebarCategories;
 
-  @discourseComputed(
-    "placement",
-    "customNavigation.renderAboveMainContainer",
-    "customNavigation.renderDiscoveryAbove"
-  )
-  shouldShow(placement, renderAboveMainContainer, renderDiscoveryAbove) {
-    if (placement === "above-main-container") {
-      return renderAboveMainContainer;
-    } else if (placement === "discovery-above") {
-      return renderDiscoveryAbove;
-    }
-  }
-
   @action
   toggleSection(e) {
     if (
@@ -69,7 +56,7 @@ export default class CustomNavigation extends Component {
   }
 
   <template>
-    {{#if this.shouldShow}}
+    <div class="category-sidebar-outlet">
       <div class="category-sidebar">
         <ul class="category-sidebar-list">
           <li class="category-sidebar-list-item all-topics">
@@ -237,6 +224,6 @@ export default class CustomNavigation extends Component {
           {{/each}}
         </ul>
       </div>
-    {{/if}}
+    </div>
   </template>
 }
