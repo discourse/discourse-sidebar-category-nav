@@ -1,5 +1,4 @@
 import { apiInitializer } from "discourse/lib/api";
-import Component from "@glimmer/component";
 import CustomNavigation from "../components/custom-navigation";
 
 export default apiInitializer((api) => {
