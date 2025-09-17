@@ -64,7 +64,6 @@ export default class CustomNavigation extends Component {
 
   <template>
     {{#if this.shouldRender}}
-      {{log "component"}}
       <div class="category-sidebar-outlet">
         <div class="category-sidebar">
           <ul class="category-sidebar-list">
