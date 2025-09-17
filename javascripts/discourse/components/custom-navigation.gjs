@@ -9,7 +9,6 @@ import { tagName } from "@ember-decorators/component";
 import { and, eq, or } from "truth-helpers";
 import icon from "discourse/helpers/d-icon";
 import htmlSafe from "discourse/helpers/html-safe";
-import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 import childIsActive from "../helpers/child-is-active";
 
@@ -21,19 +20,6 @@ export default class CustomNavigation extends Component {
   @readOnly("router.currentRoute") currentRoute;
   @readOnly("customNavigation.currentRouteCategoryId") currentRouteCategoryId;
   @readOnly("customNavigation.sidebarCategories") sidebarCategories;
-
-  @discourseComputed(
-    "placement",
-    "customNavigation.renderAboveMainContainer",
-    "customNavigation.renderDiscoveryAbove"
-  )
-  shouldShow(placement, renderAboveMainContainer, renderDiscoveryAbove) {
-    if (placement === "above-main-container") {
-      return renderAboveMainContainer;
-    } else if (placement === "discovery-above") {
-      return renderDiscoveryAbove;
-    }
-  }
 
   @action
   toggleSection(e) {
@@ -69,7 +55,7 @@ export default class CustomNavigation extends Component {
   }
 
   <template>
-    {{#if this.shouldShow}}
+    <div class="category-sidebar-outlet">
       <div class="category-sidebar">
         <ul class="category-sidebar-list">
           <li class="category-sidebar-list-item all-topics">
@@ -237,6 +223,6 @@ export default class CustomNavigation extends Component {
           {{/each}}
         </ul>
       </div>
-    {{/if}}
+    </div>
   </template>
 }
