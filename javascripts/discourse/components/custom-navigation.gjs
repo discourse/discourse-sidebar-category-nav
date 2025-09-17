@@ -21,6 +21,14 @@ export default class CustomNavigation extends Component {
   @readOnly("customNavigation.currentRouteCategoryId") currentRouteCategoryId;
   @readOnly("customNavigation.sidebarCategories") sidebarCategories;
 
+  get shouldRender() {
+    if (this.outlet === "discovery") {
+      return this.customNavigation.renderDiscoveryAbove;
+    } else if (this.outlet === "main-container") {
+      return this.customNavigation.renderAboveMainContainer;
+    }
+  }
+
   @action
   toggleSection(e) {
     if (
@@ -55,174 +63,183 @@ export default class CustomNavigation extends Component {
   }
 
   <template>
-    <div class="category-sidebar-outlet">
-      <div class="category-sidebar">
-        <ul class="category-sidebar-list">
-          <li class="category-sidebar-list-item all-topics">
-            <LinkTo
-              @route="discovery.latest"
-              class="category-sidebar-list-item-link"
-            >
-              All Topics
-            </LinkTo>
-          </li>
+    {{#if this.shouldRender}}
+      {{log "component"}}
+      <div class="category-sidebar-outlet">
+        <div class="category-sidebar">
+          <ul class="category-sidebar-list">
+            <li class="category-sidebar-list-item all-topics">
+              <LinkTo
+                @route="discovery.latest"
+                class="category-sidebar-list-item-link"
+              >
+                All Topics
+              </LinkTo>
+            </li>
 
-          {{#each this.sidebarCategories as |sidebarCategory|}}
-            <li
-              class={{concat
-                "category-sidebar-list-item category-sidebar-list-item__parent "
-                (if
-                  (or
-                    (and
-                      (eq this.currentRouteCategoryId sidebarCategory.id)
-                      sidebarCategory.has_children
+            {{#each this.sidebarCategories as |sidebarCategory|}}
+              <li
+                class={{concat
+                  "category-sidebar-list-item category-sidebar-list-item__parent "
+                  (if
+                    (or
+                      (and
+                        (eq this.currentRouteCategoryId sidebarCategory.id)
+                        sidebarCategory.has_children
+                      )
+                      (childIsActive
+                        this.currentRouteCategoryId sidebarCategory.id
+                      )
                     )
+                    "show-children"
+                  )
+                }}
+                style={{htmlSafe
+                  (concat "--category-color: #" sidebarCategory.color ";")
+                }}
+              >
+                <div class="category-sidebar-list-item__parent-container">
+                  <LinkTo
+                    @route="discovery.category"
+                    @model={{concat
+                      sidebarCategory.slug
+                      "/"
+                      sidebarCategory.id
+                    }}
+                    class="category-sidebar-list-item-link"
+                    @current-when={{eq
+                      this.currentRouteCategoryId
+                      sidebarCategory.id
+                    }}
+                  >
+                    <span
+                      class="sidebar-category-badge"
+                    ></span>{{sidebarCategory.name}}
+                  </LinkTo>
+                  {{#if sidebarCategory.has_children}}
+                    <div
+                      class="sidebar-category-toggle"
+                      role="button"
+                      tabindex="0"
+                      {{on "click" this.toggleSection}}
+                      {{on "keyup" this.toggleSection}}
+                      aria-expanded={{if
+                        (or
+                          (and
+                            (eq this.currentRouteCategoryId sidebarCategory.id)
+                            sidebarCategory.has_children
+                          )
+                          (childIsActive
+                            this.currentRouteCategoryId sidebarCategory.id
+                          )
+                        )
+                        "true"
+                        "false"
+                      }}
+                      aria-controls={{concat
+                        "category-sidebar-list-"
+                        sidebarCategory.id
+                      }}
+                      aria-label={{i18n
+                        (themePrefix "subcategory_toggle")
+                        category=sidebarCategory.name
+                      }}
+                    >
+                      {{icon "chevron-right"}}
+                    </div>
+                  {{/if}}
+                </div>
+                {{#if
+                  (or
+                    sidebarCategory.has_children
                     (childIsActive
                       this.currentRouteCategoryId sidebarCategory.id
                     )
                   )
-                  "show-children"
-                )
-              }}
-              style={{htmlSafe
-                (concat "--category-color: #" sidebarCategory.color ";")
-              }}
-            >
-              <div class="category-sidebar-list-item__parent-container">
-                <LinkTo
-                  @route="discovery.category"
-                  @model={{concat sidebarCategory.slug "/" sidebarCategory.id}}
-                  class="category-sidebar-list-item-link"
-                  @current-when={{eq
-                    this.currentRouteCategoryId
-                    sidebarCategory.id
-                  }}
-                >
-                  <span
-                    class="sidebar-category-badge"
-                  ></span>{{sidebarCategory.name}}
-                </LinkTo>
-                {{#if sidebarCategory.has_children}}
-                  <div
-                    class="sidebar-category-toggle"
-                    role="button"
-                    tabindex="0"
-                    {{on "click" this.toggleSection}}
-                    {{on "keyup" this.toggleSection}}
-                    aria-expanded={{if
-                      (or
-                        (and
-                          (eq this.currentRouteCategoryId sidebarCategory.id)
-                          sidebarCategory.has_children
-                        )
-                        (childIsActive
-                          this.currentRouteCategoryId sidebarCategory.id
-                        )
-                      )
-                      "true"
-                      "false"
-                    }}
-                    aria-controls={{concat
-                      "category-sidebar-list-"
-                      sidebarCategory.id
-                    }}
-                    aria-label={{i18n
-                      (themePrefix "subcategory_toggle")
-                      category=sidebarCategory.name
-                    }}
+                }}
+                  <ul
+                    class="category-sidebar-list subcategories"
+                    id={{concat "category-sidebar-list-" sidebarCategory.id}}
                   >
-                    {{icon "chevron-right"}}
-                  </div>
-                {{/if}}
-              </div>
-              {{#if
-                (or
-                  sidebarCategory.has_children
-                  (childIsActive this.currentRouteCategoryId sidebarCategory.id)
-                )
-              }}
-                <ul
-                  class="category-sidebar-list subcategories"
-                  id={{concat "category-sidebar-list-" sidebarCategory.id}}
-                >
-                  {{#each sidebarCategory.subcategories as |childCategory|}}
-                    <li
-                      class="category-sidebar-list-item child
-                        {{if childCategory.subcategories 'has-children'}}"
-                      style={{htmlSafe
-                        (concat "--category-color: #" childCategory.color ";")
-                      }}
-                    >
-                      <LinkTo
-                        @route="discovery.category"
-                        @model={{concat
-                          sidebarCategory.slug
-                          "/"
-                          childCategory.slug
-                          "/"
-                          childCategory.id
-                        }}
-                        class="category-sidebar-list-item-link subcategory-item"
-                        @current-when={{eq
-                          this.currentRouteCategoryId
-                          childCategory.id
+                    {{#each sidebarCategory.subcategories as |childCategory|}}
+                      <li
+                        class="category-sidebar-list-item child
+                          {{if childCategory.subcategories 'has-children'}}"
+                        style={{htmlSafe
+                          (concat "--category-color: #" childCategory.color ";")
                         }}
                       >
-                        {{childCategory.name}}
-                      </LinkTo>
-
-                      {{#if
-                        (or
-                          (eq this.currentRouteCategoryId childCategory.id)
-                          childCategory.has_children
-                        )
-                      }}
-                        <ul class="category-sidebar-list sub-subcategories">
-                          {{#each
-                            childCategory.subcategories
-                            as |grandChildCategory|
+                        <LinkTo
+                          @route="discovery.category"
+                          @model={{concat
+                            sidebarCategory.slug
+                            "/"
+                            childCategory.slug
+                            "/"
+                            childCategory.id
                           }}
-                            <li
-                              class="category-sidebar-list-item grandchild"
-                              style={{htmlSafe
-                                (concat
-                                  "--category-color: #"
-                                  grandChildCategory.color
-                                  ";"
-                                )
-                              }}
-                            >
-                              <LinkTo
-                                @route="discovery.category"
-                                @model={{concat
-                                  sidebarCategory.slug
-                                  "/"
-                                  childCategory.slug
-                                  "/"
-                                  grandChildCategory.slug
-                                  "/"
-                                  grandChildCategory.id
-                                }}
-                                class="category-sidebar-list-item-link subcategory-item grandchild"
-                                @current-when={{eq
-                                  this.currentRouteCategoryId
-                                  grandChildCategory.id
+                          class="category-sidebar-list-item-link subcategory-item"
+                          @current-when={{eq
+                            this.currentRouteCategoryId
+                            childCategory.id
+                          }}
+                        >
+                          {{childCategory.name}}
+                        </LinkTo>
+
+                        {{#if
+                          (or
+                            (eq this.currentRouteCategoryId childCategory.id)
+                            childCategory.has_children
+                          )
+                        }}
+                          <ul class="category-sidebar-list sub-subcategories">
+                            {{#each
+                              childCategory.subcategories
+                              as |grandChildCategory|
+                            }}
+                              <li
+                                class="category-sidebar-list-item grandchild"
+                                style={{htmlSafe
+                                  (concat
+                                    "--category-color: #"
+                                    grandChildCategory.color
+                                    ";"
+                                  )
                                 }}
                               >
-                                {{grandChildCategory.name}}
-                              </LinkTo>
-                            </li>
-                          {{/each}}
-                        </ul>
-                      {{/if}}
-                    </li>
-                  {{/each}}
-                </ul>
-              {{/if}}
-            </li>
-          {{/each}}
-        </ul>
+                                <LinkTo
+                                  @route="discovery.category"
+                                  @model={{concat
+                                    sidebarCategory.slug
+                                    "/"
+                                    childCategory.slug
+                                    "/"
+                                    grandChildCategory.slug
+                                    "/"
+                                    grandChildCategory.id
+                                  }}
+                                  class="category-sidebar-list-item-link subcategory-item grandchild"
+                                  @current-when={{eq
+                                    this.currentRouteCategoryId
+                                    grandChildCategory.id
+                                  }}
+                                >
+                                  {{grandChildCategory.name}}
+                                </LinkTo>
+                              </li>
+                            {{/each}}
+                          </ul>
+                        {{/if}}
+                      </li>
+                    {{/each}}
+                  </ul>
+                {{/if}}
+              </li>
+            {{/each}}
+          </ul>
+        </div>
       </div>
-    </div>
+    {{/if}}
   </template>
 }
