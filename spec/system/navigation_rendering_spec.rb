@@ -30,10 +30,10 @@ describe "Navigation Rendering", type: :system do
   end
 
   context "when on topic routes" do
-    it "does not render navigation" do
+    it "does render navigation" do
       visit("/t/#{@topic.slug}/#{@topic.id}")
 
-      expect(page).to have_no_selector(".category-sidebar-outlet")
+      expect(page).to have_selector(".category-sidebar-outlet")
     end
   end
 
