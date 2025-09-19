@@ -15,7 +15,7 @@ describe "Navigation Rendering", type: :system do
     @post = Fabricate(:post, topic: @topic)
   end
 
-  context "on discovery routes" do
+  context "when on discovery routes" do
     it "renders navigation only once" do
       visit("/")
 
@@ -29,7 +29,7 @@ describe "Navigation Rendering", type: :system do
     end
   end
 
-  context "on topic routes" do
+  context "when on topic routes" do
     it "does not render navigation" do
       visit("/t/#{@topic.slug}/#{@topic.id}")
 
@@ -37,7 +37,7 @@ describe "Navigation Rendering", type: :system do
     end
   end
 
-  context "on categories page" do
+  context "when on categories page" do
     it "renders navigation only once" do
       visit("/categories")
 
@@ -45,7 +45,7 @@ describe "Navigation Rendering", type: :system do
     end
   end
 
-  context "navigation not rendered elsewhere" do
+  context "while elsewhere navigation does not render" do
     it "does not render on user profiles" do
       user = Fabricate(:user)
       visit("/u/#{user.username}")
