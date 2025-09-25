@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 describe "Navigation Rendering", type: :system do
-  let(:theme) do
+  let!(:category) { Fabricate(:category, name: "Test Category") }
+  let!(:topic) { Fabricate(:topic, category:) }
+  let!(:post) { Fabricate(:post, topic:) }
+  let!(:theme) do
     parent_theme = Fabricate(:theme, name: "Parent Theme")
     component = Fabricate(:theme, name: "Category Sidebar Navigation", component: true)
     parent_theme.set_default!
@@ -10,9 +13,6 @@ describe "Navigation Rendering", type: :system do
   before do
     theme
     upload_theme_component
-    @category = Fabricate(:category, name: "Test Category")
-    @topic = Fabricate(:topic, category: @category)
-    @post = Fabricate(:post, topic: @topic)
   end
 
   context "when on discovery routes" do
@@ -23,7 +23,7 @@ describe "Navigation Rendering", type: :system do
     end
 
     it "renders navigation on category pages" do
-      visit("/c/#{@category.id}")
+      visit("/c/#{category.id}")
 
       expect(page).to have_selector(".category-sidebar-outlet", count: 1)
     end
@@ -31,7 +31,7 @@ describe "Navigation Rendering", type: :system do
 
   context "when on topic routes" do
     it "does render navigation" do
-      visit("/t/#{@topic.slug}/#{@topic.id}")
+      visit("/t/#{topic.id}")
 
       expect(page).to have_selector(".category-sidebar-outlet")
     end
