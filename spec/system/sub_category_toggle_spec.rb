@@ -10,7 +10,6 @@ describe "Sub Category Toggle", type: :system do
   end
 
   before do
-    theme
     upload_theme_component
   end
 

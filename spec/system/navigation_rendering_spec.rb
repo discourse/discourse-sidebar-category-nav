@@ -11,7 +11,6 @@ describe "Navigation Rendering", type: :system do
   end
 
   before do
-    theme
     upload_theme_component
   end
 
