@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
 describe "Sub Category Toggle", type: :system do
-  let(:theme) do
-    parent_theme = Fabricate(:theme, name: "Parent Theme")
-    component = Fabricate(:theme, name: "Category Sidebar Navigation", component: true)
-    parent_theme.set_default!
-  end
+  let!(:category) { Fabricate(:category, name: "Test Category") }
+  let!(:subcategory) { Fabricate(:category, name: "Test Subcategory", parent_category: category) }
 
   before do
-    theme
     upload_theme_component
-    @category = Fabricate(:category, name: "Test Category")
-    @subcategory = Fabricate(:category, name: "Test Subcategory", parent_category: @category)
   end
 
   it "displays subcategories when toggle is clicked" do
@@ -22,16 +16,16 @@ describe "Sub Category Toggle", type: :system do
     expect(page).to have_selector(".category-sidebar-list-item__parent.show-children")
     expect(page).to have_selector(
       ".category-sidebar-list-item-link.subcategory-item",
-      text: @subcategory.name,
+      text: subcategory.name,
     )
   end
 
   it "displays subcategories when on category page" do
-    visit("/c/#{@category.id}")
+    visit("/c/#{category.id}")
     expect(page).to have_selector(".category-sidebar-list-item__parent.show-children")
     expect(page).to have_selector(
       ".category-sidebar-list-item-link.subcategory-item",
-      text: @subcategory.name,
+      text: subcategory.name,
     )
   end
 end
