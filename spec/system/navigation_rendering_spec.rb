@@ -4,11 +4,6 @@ describe "Navigation Rendering", type: :system do
   let!(:category) { Fabricate(:category, name: "Test Category") }
   let!(:topic) { Fabricate(:topic, category:) }
   let!(:post) { Fabricate(:post, topic:) }
-  let!(:theme) do
-    parent_theme = Fabricate(:theme, name: "Parent Theme")
-    component = Fabricate(:theme, name: "Category Sidebar Navigation", component: true)
-    parent_theme.set_default!
-  end
 
   before do
     upload_theme_component

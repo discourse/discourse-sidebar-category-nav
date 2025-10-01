@@ -3,11 +3,6 @@
 describe "Sub Category Toggle", type: :system do
   let!(:category) { Fabricate(:category, name: "Test Category") }
   let!(:subcategory) { Fabricate(:category, name: "Test Subcategory", parent_category: category) }
-  let!(:theme) do
-    parent_theme = Fabricate(:theme, name: "Parent Theme")
-    component = Fabricate(:theme, name: "Category Sidebar Navigation", component: true)
-    parent_theme.set_default!
-  end
 
   before do
     upload_theme_component
