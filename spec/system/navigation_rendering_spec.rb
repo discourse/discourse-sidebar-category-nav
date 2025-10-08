@@ -5,9 +5,7 @@ describe "Navigation Rendering", type: :system do
   let!(:topic) { Fabricate(:topic, category:) }
   let!(:post) { Fabricate(:post, topic:) }
 
-  before do
-    upload_theme_component
-  end
+  before { upload_theme_component }
 
   context "when on discovery routes" do
     it "renders navigation only once" do
