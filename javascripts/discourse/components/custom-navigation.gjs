@@ -5,10 +5,10 @@ import { action } from "@ember/object";
 import { readOnly } from "@ember/object/computed";
 import { LinkTo } from "@ember/routing";
 import { service } from "@ember/service";
+import { htmlSafe } from "@ember/template";
 import { tagName } from "@ember-decorators/component";
 import { and, eq, or } from "truth-helpers";
 import icon from "discourse/helpers/d-icon";
-import htmlSafe from "discourse/helpers/html-safe";
 import { i18n } from "discourse-i18n";
 import childIsActive from "../helpers/child-is-active";
 

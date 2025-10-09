@@ -4,9 +4,7 @@ describe "Sub Category Toggle", type: :system do
   let!(:category) { Fabricate(:category, name: "Test Category") }
   let!(:subcategory) { Fabricate(:category, name: "Test Subcategory", parent_category: category) }
 
-  before do
-    upload_theme_component
-  end
+  before { upload_theme_component }
 
   it "displays subcategories when toggle is clicked" do
     visit("/")
