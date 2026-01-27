@@ -2,8 +2,8 @@
   #main-outlet {
     display: grid;
     grid-template-columns: calc(20% - 0.5em) calc(80% - 0.5em);
-    grid-column-gap: 1em;
-    grid-row-gap: 3px;
+    column-gap: 1em;
+    row-gap: 3px;
 
     @media screen and (width <= 960px) {
       grid-template-columns: calc(25% - 0.5em) calc(75% - 0.5em);
