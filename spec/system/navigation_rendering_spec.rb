@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Navigation Rendering", type: :system do
+describe "Navigation Rendering" do
   let!(:category) { Fabricate(:category, name: "Test Category") }
   let!(:topic) { Fabricate(:topic, category:) }
   let!(:post) { Fabricate(:post, topic:) }
