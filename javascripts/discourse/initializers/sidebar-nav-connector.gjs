@@ -8,7 +8,7 @@ export default apiInitializer((api) => {
   );
 
   api.renderInOutlet(
-    "above-main-container",
+    "before-main-outlet",
     <template><CustomNavigation @outlet="main-container" /></template>
   );
 });
