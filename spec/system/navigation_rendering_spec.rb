@@ -27,6 +27,16 @@ describe "Navigation Rendering" do
 
       expect(page).to have_selector(".category-sidebar-outlet")
     end
+
+    it "renders navigation when navigating directly to a deep post (first chunk of posts not loaded)" do
+      deep_topic = Fabricate(:topic, category:)
+
+      22.times { Fabricate(:post, topic: deep_topic) }
+
+      visit("/t/#{deep_topic.slug}/#{deep_topic.id}/22")
+
+      expect(page).to have_selector(".category-sidebar-outlet")
+    end
   end
 
   context "when on categories page" do

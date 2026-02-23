@@ -1,5 +1,42 @@
 .sidebar-navigation-shown {
-  #main-outlet-wrapper {
+  // for the custom sidebar outside of topics
+  &:not([class*="archetype-"]) {
+    #main-outlet {
+      display: grid;
+      grid-template-columns: calc(20% - 0.5em) calc(80% - 0.5em);
+      column-gap: 1em;
+      row-gap: 3px;
+
+      @media screen and (width <= 960px) {
+        grid-template-columns: calc(25% - 0.5em) calc(75% - 0.5em);
+      }
+      grid-template-areas: "global global" "navigation navigation" "sidebar content";
+      grid-template-rows: auto auto 1fr;
+
+      #main-container {
+        grid-area: global;
+        grid-column-start: 1;
+      }
+
+      .category-sidebar-outlet,
+      .list-controls + .loading-container + span,
+      .dismiss-container-top + span {
+        grid-area: sidebar;
+      }
+
+      .list-controls {
+        grid-area: navigation;
+      }
+
+      .list-container {
+        grid-area: content;
+      }
+    }
+  }
+
+  // for the custom sidebar within topics
+  // topics use a different grid layout due to plugin outlet constraints
+  &[class*="archetype-"] #main-outlet-wrapper {
     grid-template-columns: calc(20% - 0.5em) calc(80% - 0.5em);
     gap: 1em;
     grid-template-areas: "category-sidebar main-content";
@@ -10,6 +47,7 @@
 
     .category-sidebar-outlet {
       grid-area: category-sidebar;
+      grid-row-start: 1 !important; // overrides another important
     }
 
     #main-outlet {
