@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-components */
 import Component from "@ember/component";
 import { concat } from "@ember/helper";
 import { on } from "@ember/modifier";
@@ -7,8 +8,8 @@ import { LinkTo } from "@ember/routing";
 import { service } from "@ember/service";
 import { htmlSafe } from "@ember/template";
 import { tagName } from "@ember-decorators/component";
-import { and, eq, or } from "truth-helpers";
 import icon from "discourse/helpers/d-icon";
+import { and, eq, or } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
 import childIsActive from "../helpers/child-is-active";
 
